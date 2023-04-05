@@ -1,91 +1,56 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+import { Fira_Sans } from "next/font/google";
+import React from "react";
+// const inter = Inter({ subsets: ["latin"] });
+import { GiWhiteBook } from "react-icons/gi";
+import { AiOutlinePlus } from "react-icons/ai";
+const url = "https://simple-books-api.glitch.me/books";
 
-const inter = Inter({ subsets: ['latin'] })
+const fetchdata = async () => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.log("Network error");
+    return;
+  }
+  try {
+    const data = await response.json();
+    console.log("data:", data);
+    return data;
+  } catch (e) {
+    console.log("error:", e);
+    return e;
+  }
+};
 
-export default function Home() {
+export default async function Home() {
+  const data = await fetchdata();
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className=" bg-green-200 h-screen p-16 gap-5 flex items-center flex-wrap justify-center ">
+      {data.map((book: any, idx: number) => (
+        <div
+          className="flex bg-white shadow-2xl rounded-md flex-col  w-[350px] text-center justify-center items-center h-[200px] "
+          key={idx}
+        >
+          <div className="flex flex-col gap-1 mb-4">
+            <div className="flex gap-2">
+              <GiWhiteBook size={25} color="green" />
+              <p className=" font-extrabold text-lg">{book.name}</p>
+            </div>
+            <p className="font-semibold">{book.type}</p>
+            <p
+              className={`${
+                book.available ? "  bg-green-500" : "bg-red-600"
+              } shadow-lg rounded-sm font-semibold w-auto px-3 mx-auto text-white`}
+            >
+              {book.available ? "Available" : "Sold Out"}
+            </p>
+          </div>
+          <div className="flex px-8 justify-end  w-full">
+            <button className="rounded-full shadow-lg flex items-center justify-center font-bold  w-[40px] h-[40px] text-white hover:bg-green-800  bg-green-700">
+              <AiOutlinePlus size={22} />
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      ))}
+    </div>
+  );
 }
