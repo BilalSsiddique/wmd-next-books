@@ -1,11 +1,32 @@
 "use client";
 import { useState } from "react";
-import type { NextApiRequest, NextApiResponse } from "next";
+import Form from "@/component/Form";
+import Link from "next/link";
+
+// Interface
+interface SignUpDetails {
+  accessToken: string;
+}
+type SignUpResponseInterface =
+  | SignUpDetails
+  | "No data provided"
+  | "Response error"
+  | undefined;
+
+// Main component
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [signUpResponse, setSignUpResponse] =
+    useState<SignUpResponseInterface>();
+  // {
+  //   accessToken:
+  //     "eb87d6697721e96f893d172cc14cb4483b3a677eec7d3abbb99a0ef0d670c479",
+  // } // Signup request response undefined by default, error or actual response
+  const [formActive, setFormActive] = useState(true);
 
+  // SignuP form Inputs handlers
   const handleName = (event: any) => {
     setName(event.target.value);
   };
@@ -13,66 +34,106 @@ export default function Signup() {
     setEmail(e.target.value);
   };
 
-  const data = {
-    clientName: name,
-    clientEmail: email,
-  };
-
   const createUser = async (e: any) => {
     e.preventDefault();
-    console.log(data.clientName);
-    console.log(data);
-
-    const url = "/api/handleuser";
-
-    const res = await fetch(url, {
+    // console.log(data.clientName);
+    // console.log(data);
+    const baseUrl = process.env.BASE_URL;
+    console.log(baseUrl);
+    fetch(`${baseUrl}/api/signUpUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
       },
-      body: JSON.stringify(data),
-    });
-
-    const data1 = res;
-    console.log("data>", data1);
+      body: JSON.stringify({
+        clientName: name,
+        clientEmail: email,
+      }),
+      cache: "no-store",
+    })
+      .then((res) => res.json())
+      .then((data) => setSignUpResponse(data))
+      .catch((error) => setSignUpResponse(error));
+    setName("");
+    setEmail("");
+    setFormActive(false)
+    setSignUpResponse(undefined)
   };
 
-  return (
-    <div className="w-full h-screen bg-slate-800 ">
-      <form
-        action="
-      "
-        onSubmit={createUser}
-      >
-        <div className="flex justify-center items-center h-screen">
-          <div className="flex rounded-sm flex-col sm:w-96 w-80 h-96 justify-center p-8 md:px-10 bg-white gap-3">
-            <input
-              value={name}
-              name="name"
-              onChange={handleName}
-              className="border p-2"
-              type="text"
-              placeholder="Enter your Name"
-            />
-            <input
-              value={email}
-              name="email"
-              onChange={handleEmail}
-              className="border p-2"
-              type="email"
-              placeholder="Enter your Email"
-            />
+  console.log("response", signUpResponse);
 
-            <button className="bg-green-500 mt-10  text-white p-2  rounded-md ">
-              Signup
-            </button>
-          </div>
+  const disabled = name.trim().length === 0 || email.trim().length === 0;
+
+  return (
+    <>
+      <div className="w-auto h-screen bg-slate-800 ">
+        {formActive && (
+          <Form
+            name={name}
+            email={email}
+            handleName={handleName}
+            handleEmail={handleEmail}
+            createUser={createUser}
+            disabled={disabled}
+          />
+        )}
+        {signUpResponse === "No data provided" ||
+        signUpResponse === "Response error" ||
+        signUpResponse === undefined ? (
+          <ShowError setFormActive={setFormActive} response={signUpResponse} />
+        ) : (
+          <ShowSuccess
+            setFormActive={setFormActive}
+            response={signUpResponse}
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
+const ShowSuccess = ({ response, setFormActive }: any) => {
+  return (
+    <div className="flex  h-screen  justify-center items-center">
+      <div className="text-lg gap-3 flex-col bg-white  flex h-96 w-[500px] rounded-md items-center justify-center">
+        <div className="w-auto text-center py-2 px-3  h-[50%]">
+          <p className=" gap-1 font-semibold flex-col flex justify-center items-center ">
+            <p>Your Token ID: </p>
+            <p className=" text-[12px]">
+              <br /> {response.accessToken}
+            </p>
+            <p className="mt-4">
+              This will be your Login ID so kindly save it.
+            </p>
+          </p>
         </div>
-      </form>
+
+        <button onClick={()=>setFormActive(true)} className="bg-green-500 py-1 text-white rounded-lg w-[50%]">
+          Back
+        </button>
+      </div>
     </div>
   );
+};
 
-  return <></>;
-}
+const ShowError = ({ response, setFormActive }: any) => {
+  if (response === "Response error") {
+    response = "Name or Email Already Exists";
+  }
+
+  return (
+    <div className="flex flex-col h-screen  justify-center items-center">
+      <div className="text-lg gap-3 flex-col bg-white  flex h-96 w-[500px] rounded-md items-center justify-center">
+        <div>
+          <h2 className="text-red-500 font-semibold">{response}</h2>
+        </div>
+        <button
+          className="bg-green-500 py-1 text-white rounded-lg w-[50%]"
+          onClick={() => setFormActive(true)}
+        >
+          Back
+        </button>
+      </div>
+    </div>
+  );
+};

@@ -3,29 +3,47 @@ import React from "react";
 // const inter = Inter({ subsets: ["latin"] });
 import { GiWhiteBook } from "react-icons/gi";
 import { AiOutlinePlus } from "react-icons/ai";
-const url = "https://simple-books-api.glitch.me/books";
+import { error } from "console";
 
-const fetchdata = async () => {
+
+interface Books {
+  id: number;
+  name: string;
+  type: string;
+  available: boolean;
+}
+
+
+const ShowError = ()=>{
+  return (
+    <div className="h-[500px] rounded-lg w-[300px] flex justify-center items-center bg-black">
+        <div className="bg-white px-5 rounded-lg text-red-700 font-semibold">
+          <h3 className="text-lg">Error : Data not found</h3>
+        </div>
+    </div>
+  )
+}
+
+
+const fetchdata = async (): Promise<Books[] | 'error'>  => {
+  const url = "https://simple-books-api.glitch.me/books";
   const response = await fetch(url);
-  if (!response.ok) {
-    console.log("Network error");
-    return;
-  }
   try {
-    const data = await response.json();
-    console.log("data:", data);
-    return data;
-  } catch (e) {
-    console.log("error:", e);
-    return e;
+    if (!response.ok) {
+      throw new Error("Response not Ok");
+    }
+    return response.json()
+  } catch (error) {
+    return error as 'error';
   }
 };
 
 export default async function Home() {
   const data = await fetchdata();
+  
   return (
     <div className=" bg-green-200 h-screen p-16 gap-5 flex items-center flex-wrap justify-center ">
-      {data.map((book: any, idx: number) => (
+      { data === 'error' ? <ShowError/> : data.map((book: any, idx: number) => (
         <div
           className="flex bg-white shadow-2xl rounded-md flex-col  w-[350px] text-center justify-center items-center h-[200px] "
           key={idx}

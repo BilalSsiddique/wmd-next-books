@@ -36,9 +36,11 @@ const Header = () => {
             <FaShoppingCart size={25} />
           </li>
           <li>
-            <button className="rounded-sm font-bold  text-black px-4 py-1  bg-white">
-              <Link href="/signup">Sign Up</Link>
-            </button>
+            <Link href="/signup">
+              <button className="rounded-sm font-bold  text-black px-4 py-1  bg-white">
+                Sign Up{" "}
+              </button>
+            </Link>
           </li>
         </ul>
       </header>
