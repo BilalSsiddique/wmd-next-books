@@ -115,10 +115,10 @@ const ShowSuccess = ({ response, setSignUpResponse }: any) => {
             {response?.accessToken !== undefined ? (
               <>
                 <p>Your Token ID: </p>
-                <p className=" text-[12px]">
+                <p className=" text-[8px]">
                   <br /> {response.accessToken}
                 </p>
-                <p className="mt-4">
+                <p className="mt-4 text-[14px]">
                   This will be your Login ID so kindly save it.
                 </p>
               </>
