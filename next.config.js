@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   env: {
-    BASE_URL: "http://localhost:3000", //Development
+    BASE_URL: "https://simple-book-store-bilal-siddique.vercel.app/", //Development
   },
 };
 
