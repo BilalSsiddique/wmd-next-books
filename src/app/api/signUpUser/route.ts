@@ -2,8 +2,8 @@
 async function signUp(
   body: { clientName: string; clientEmail: string } | null
 ) {
-  console.log('body:::::',body);
-  if (body?.clientEmail.trim() !=='' || body?.clientName.trim() !==''  ) {
+ 
+  if (body?.clientEmail.trim().length !==0 || body?.clientName.trim().length !==0  ) {
     const res = await fetch(`https://simple-books-api.glitch.me/api-clients/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,5 +22,8 @@ async function signUp(
 export async function POST(request: Request) {
   let body = await request.json();
   let result = await signUp(body);
+  if (result === undefined){
+    console.log('res',result)
+  }  
   return new Response(JSON.stringify(result));
 }

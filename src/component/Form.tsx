@@ -1,5 +1,5 @@
 import Link from 'next/link'
-
+import { BsArrowRightShort } from 'react-icons/bs';
 export default function Form({
   name,
   email,
@@ -41,13 +41,22 @@ export default function Form({
             placeholder="Enter your Email"
           />
 
-          <button
+          {/* <button
             disabled={disabled}
             onClick={createUser}
             className=" disabled:text-[#666666]  disabled:bg-[#cccccc] bg-green-500 mt-10  text-white p-2  rounded-md "
           >
             Signup
+          </button> */}
+          <button
+            disabled={disabled}
+            onClick={createUser}
+            className="disabled:text-[#666666] justify-between disabled:bg-[#cccccc]  gap-2 hover:bg-green-700 font-semibold  flex items-end bg-green-500 text-center  text-white py-2 px-2  rounded-md "
+          >
+            <p>Sign Up</p>
+            <BsArrowRightShort fontWeight="extrabold" size={22} />
           </button>
+
           <p>
             Already have an Account?{" "}
             <Link href="/signin">

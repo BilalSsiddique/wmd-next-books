@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "^13.2.4",
+    "@reduxjs/toolkit": "^1.9.3",
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
+    "@types/react-fontawesome": "^1.6.5",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
     "next": "13.2.4",
@@ -20,8 +21,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
-    "react-toastify": "^9.1.2",
+    "react-redux": "^8.0.5",
     "swr": "^2.1.2",
+    "toastify": "^2.0.1",
     "typescript": "5.0.3"
   },
   "devDependencies": {

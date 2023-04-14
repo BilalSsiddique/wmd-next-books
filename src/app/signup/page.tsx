@@ -1,7 +1,11 @@
 "use client";
 import { useState } from "react";
 import Form from "@/component/Form";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/slices/userSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { BsArrowRightShort, BsArrowLeftShort } from "react-icons/bs";
 
 // Interface
 interface SignUpDetails {
@@ -22,8 +26,10 @@ export default function Signup() {
     useState<SignUpResponseInterface>();
   // {
   //   accessToken:
-  //     "eb87d6697721e96f893d172cc14cb4483b3a677eec7d3abbb99a0ef0d670c479",
-  // } // Signup request response undefined by default, error or actual response
+  //     '7461a8afc1039ec89a4517998dcc4e1a1184a2d3589598638c0f6c7655dfe674',
+  // }
+  // {accessToken:
+  //   "eb87d6697721e96f893d172cc14cb4483b3a677eec7d3abbb99a0ef0d670c479"} // Signup request response undefined by default, error or actual response
   const [formActive, setFormActive] = useState(true);
 
   // SignuP form Inputs handlers
@@ -56,8 +62,8 @@ export default function Signup() {
       .catch((error) => setSignUpResponse(error));
     setName("");
     setEmail("");
-    setFormActive(false)
-    setSignUpResponse(undefined)
+    setFormActive(false);
+    setSignUpResponse(undefined);
   };
 
   console.log("response", signUpResponse);
@@ -80,11 +86,15 @@ export default function Signup() {
         {signUpResponse === "No data provided" ||
         signUpResponse === "Response error" ||
         signUpResponse === undefined ? (
-          <ShowError setFormActive={setFormActive} response={signUpResponse} />
-        ) : (
-          <ShowSuccess
+          <ShowError
             setFormActive={setFormActive}
             response={signUpResponse}
+            setSignUpResponse={setSignUpResponse}
+          />
+        ) : (
+          <ShowSuccess
+            response={signUpResponse}
+            setSignUpResponse={setSignUpResponse}
           />
         )}
       </div>
@@ -92,46 +102,87 @@ export default function Signup() {
   );
 }
 
-const ShowSuccess = ({ response, setFormActive }: any) => {
+const ShowSuccess = ({ response, setSignUpResponse }: any) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  console.log("response", response);
+  // if (response?.accesstoken===undefined) return null
   return (
     <div className="flex  h-screen  justify-center items-center">
       <div className="text-lg gap-3 flex-col bg-white  flex h-96 w-[500px] rounded-md items-center justify-center">
         <div className="w-auto text-center py-2 px-3  h-[50%]">
           <p className=" gap-1 font-semibold flex-col flex justify-center items-center ">
-            <p>Your Token ID: </p>
-            <p className=" text-[12px]">
-              <br /> {response.accessToken}
-            </p>
-            <p className="mt-4">
-              This will be your Login ID so kindly save it.
-            </p>
+            {response?.accessToken !== undefined ? (
+              <>
+                <p>Your Token ID: </p>
+                <p className=" text-[12px]">
+                  <br /> {response.accessToken}
+                </p>
+                <p className="mt-4">
+                  This will be your Login ID so kindly save it.
+                </p>
+              </>
+            ) : (
+              <p className="text-red-600 text-center">
+                Internal Server Error <br /> Check your Network
+              </p>
+            )}
           </p>
         </div>
 
-        <button onClick={()=>setFormActive(true)} className="bg-green-500 py-1 text-white rounded-lg w-[50%]">
-          Back
-        </button>
+        {response?.accessToken !== undefined ? (
+          <button
+            onClick={() => {
+              dispatch(setUser(response.accessToken));
+              setSignUpResponse(undefined);
+              router.push("/signin");
+            }}
+            className="w-[50%] gap-2 hover:bg-green-700 hover:font-semibold  flex items-end bg-green-500 text-center  text-white py-1 px-2  rounded-md "
+          >
+            <p>Back</p>
+            <BsArrowRightShort fontWeight="extrabold" size={22} />
+          </button>
+        ) : (
+          
+          <Link
+            href={`/books`}
+            onClick={() => {
+              setSignUpResponse(undefined);
+            }}
+            className="hover:font-semibold w-auto gap-2 hover:bg-green-700  flex items-end bg-green-500 text-center  text-white py-1 px-2  rounded-md "
+          >
+            <p>Home</p>
+            <BsArrowRightShort fontWeight="extrabold" size={22} />
+          </Link>
+        )}
       </div>
     </div>
   );
 };
 
-const ShowError = ({ response, setFormActive }: any) => {
+const ShowError = ({ response, setFormActive, setSignUpResponse }: any) => {
   if (response === "Response error") {
     response = "Name or Email Already Exists";
   }
 
+  if (response === undefined) return null;
   return (
-    <div className="flex flex-col h-screen  justify-center items-center">
-      <div className="text-lg gap-3 flex-col bg-white  flex h-96 w-[500px] rounded-md items-center justify-center">
+    <div className="flex flex-col h-screen justify-center items-center">
+      <div className="text-lg gap-3 flex-col bg-white h-72 flex  w-[500px] rounded-md items-center justify-center">
         <div>
-          <h2 className="text-red-500 font-semibold">{response}</h2>
+          <h2 className={`${"text-red-500"} font-semibold`}>{response}</h2>
         </div>
+
+        
         <button
-          className="bg-green-500 py-1 text-white rounded-lg w-[50%]"
-          onClick={() => setFormActive(true)}
+          onClick={() => {
+            setFormActive(true);
+            setSignUpResponse(undefined);
+          }}
+          className="w-[50%] gap-2 hover:bg-green-700 hover:font-semibold  flex items-end bg-green-500 text-center  text-white py-1 px-2  rounded-md "
         >
-          Back
+          <p>Back</p>
+          <BsArrowLeftShort fontWeight="extrabold" size={22} />
         </button>
       </div>
     </div>
