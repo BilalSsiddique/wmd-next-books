@@ -139,7 +139,7 @@ const ShowSuccess = ({ response, setSignUpResponse }: any) => {
             }}
             className="w-[50%] gap-2 hover:bg-green-700 hover:font-semibold  flex items-end bg-green-500 text-center  text-white py-1 px-2  rounded-md "
           >
-            <p>Back</p>
+            <p>Continue</p>
             <BsArrowRightShort fontWeight="extrabold" size={22} />
           </button>
         ) : (
