@@ -53,10 +53,14 @@ export default async function Home() {
           >
             <div className="gap-2 w-[50%] h-full flex order-2 justify-center   flex-col ">
               <div className="flex gap-2 pt-16 justify-center items-center">
-                <BsBookHalf size={25} color="green" />
-                <p className=" font-extrabold text-2xl sm:text-3xl">{book.name}</p>
+                <p className="sm:block hidden">
+                  <BsBookHalf size={25} color="green" />
+                </p>
+                <p className=" font-extrabold text-[21px] sm:text-[26px]">
+                  {book.name}
+                </p>
               </div>
-              <p className="font-semibold text-2xl">{book.type}</p>
+              <p className="font-semibold text-[18px] sm:text-2xl">{book.type}</p>
               <button className=" rounded-full  flex justify-center  font-bold   ">
                 {book.available ? (
                   <IoCheckmarkDoneCircle size={38} />
