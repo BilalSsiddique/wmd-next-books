@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${whole.className}  bg-[#1E293B]`}>
+      <body className={`${whole.className}  bg-[#1E293B]  h-[100dvh]`}>
         <Providers>
           <Header />
           <div className="mt-14 mb-24 ">{children}</div>
