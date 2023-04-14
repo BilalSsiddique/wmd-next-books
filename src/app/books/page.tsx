@@ -71,7 +71,7 @@ export default async function Home() {
               <div className="justify-end flex  items-center pb-5 h-full flex-col">
                 <Link
                   href={`/books/${book.id}`}
-                  className="font-semibold hover:bg-green-700 justify-between w-[70%] gap-2   flex items-end bg-green-500 text-center  text-white py-1 px-2  rounded-md "
+                  className="font-semibold hover:bg-green-700 justify-between w-auto gap-2   flex items-end bg-green-500 text-center  text-white py-1 px-2  rounded-md "
                 >
                   <p>Details</p>
                   <BsArrowRightShort fontWeight="extrabold" size={22} />
