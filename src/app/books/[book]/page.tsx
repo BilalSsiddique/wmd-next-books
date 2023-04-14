@@ -26,12 +26,12 @@ const fetchData = async (prop?: any): Promise<any[] | "error"> => {
   }
 };
 
-export async function generateStaticParams(): Promise<any[] | undefined> {
+export async function generateStaticParams(): Promise<any[] | any[]> {
   const res: any = await fetchData();
   console.log("res:", res);
-  if (Array.isArray(res)) {
-    return res.map((books) => books.id);
-  }
+  
+  return res.map((books:any) => books.id);
+  
 }
 
 const SingleBook = async ({ params }: { params: { book: number } }) => {
