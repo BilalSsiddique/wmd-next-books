@@ -22,14 +22,9 @@ type SignUpResponseInterface =
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [isTouched, setIsTouched] = useState(false);
   const [signUpResponse, setSignUpResponse] =
     useState<SignUpResponseInterface>();
-  // {
-  //   accessToken:
-  //     '7461a8afc1039ec89a4517998dcc4e1a1184a2d3589598638c0f6c7655dfe674',
-  // }
-  // {accessToken:
-  //   "eb87d6697721e96f893d172cc14cb4483b3a677eec7d3abbb99a0ef0d670c479"} // Signup request response undefined by default, error or actual response
   const [formActive, setFormActive] = useState(true);
 
   // SignuP form Inputs handlers
@@ -38,8 +33,15 @@ export default function Signup() {
   };
   const handleEmail = (e: any) => {
     setEmail(e.target.value);
+    setIsTouched(true)
   };
 
+  const handleBlur = (e: any) => {
+    setIsTouched(true);
+    setEmail(e.target.value);
+  };
+
+  // Trigger on button use for
   const createUser = async (e: any) => {
     e.preventDefault();
     // console.log(data.clientName);
@@ -66,9 +68,27 @@ export default function Signup() {
     setSignUpResponse(undefined);
   };
 
-  console.log("response", signUpResponse);
+  // console.log("response", signUpResponse);
+  // /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  const validateEmail = (email: String): boolean => {
+    if (email && email.trim().length !== 0) {
+      if (
+        email
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  };
 
-  const disabled = name.trim().length === 0 || email.trim().length === 0;
+  const disabledAndValidate = name.trim().length === 0 || !validateEmail(email);
+  const outOfFocus = isTouched === true && !validateEmail(email);
 
   return (
     <>
@@ -79,8 +99,10 @@ export default function Signup() {
             email={email}
             handleName={handleName}
             handleEmail={handleEmail}
+            handleBlur={handleBlur}
             createUser={createUser}
-            disabled={disabled}
+            disabled={disabledAndValidate}
+            outOfFocus={outOfFocus}
           />
         )}
         {signUpResponse === "No data provided" ||
@@ -143,7 +165,6 @@ const ShowSuccess = ({ response, setSignUpResponse }: any) => {
             <BsArrowRightShort fontWeight="extrabold" size={22} />
           </button>
         ) : (
-          
           <Link
             href={`/books`}
             onClick={() => {
@@ -173,7 +194,6 @@ const ShowError = ({ response, setFormActive, setSignUpResponse }: any) => {
           <h2 className={`${"text-red-500"} font-semibold`}>{response}</h2>
         </div>
 
-        
         <button
           onClick={() => {
             setFormActive(true);

@@ -5,18 +5,23 @@ export default function Form({
   email,
   handleName,
   handleEmail,
+  handleBlur,
   createUser,
   disabled,
-
+  outOfFocus,
 }: {
   name: string;
   email: string;
   handleName: any;
   handleEmail: any;
+  handleBlur: any;
   createUser: any;
   disabled: boolean;
-
+  outOfFocus:boolean;
 }) {
+  const ShowEmailErroMessage = () => {
+    return <p className="text-red-600 font-semibold">Email should be valid!</p>;
+  };
   return (
     <form
       action="
@@ -36,10 +41,12 @@ export default function Form({
             value={email}
             name="email"
             onChange={handleEmail}
+            onBlur={handleBlur}
             className="border border-green-700 border-l-4 p-2 outline-none"
             type="email"
             placeholder="Enter your Email"
           />
+          {outOfFocus && <ShowEmailErroMessage />}
 
           {/* <button
             disabled={disabled}
