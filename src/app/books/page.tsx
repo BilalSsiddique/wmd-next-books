@@ -42,7 +42,7 @@ export default async function Home() {
   const data = await fetchdata();
 
   return (
-    <div className=" p-16 gap-5 flex items-center flex-wrap justify-center ">
+    <div className="bg-black p-8 sm:p-16 gap-5 flex items-center flex-wrap justify-center ">
       {data === "error" ? (
         <ShowError />
       ) : (
@@ -52,11 +52,11 @@ export default async function Home() {
             key={idx}
           >
             <div className="gap-2 w-[50%] h-full flex order-2 justify-center   flex-col ">
-              <div className="flex gap-2 pt-16 justify-center items-center">
-                <p className="sm:block hidden">
+              <div className="flex gap-2 pt-3 sm:pt-16 justify-center items-center">
+                <p className=" sm:block hidden">
                   <BsBookHalf size={25} color="green" />
                 </p>
-                <p className=" font-extrabold text-[21px] sm:text-[26px]">
+                <p className=" font-extrabold text-[19px] sm:text-[26px]">
                   {book.name}
                 </p>
               </div>
@@ -68,7 +68,7 @@ export default async function Home() {
                   <CgUnavailable color="red" size={32} />
                 )}
               </button>
-              <div className="justify-end flex  items-center pb-5 h-full flex-col">
+              <div className="justify-end flex  items-center pt-3 pb-5 h-full flex-col">
                 <Link
                   href={`/books/${book.id}`}
                   className="font-semibold hover:bg-green-700 justify-between w-auto gap-2   flex items-end bg-green-500 text-center  text-white py-1 px-2  rounded-md "
