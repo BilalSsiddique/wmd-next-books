@@ -42,7 +42,7 @@ export default async function Home() {
   const data = await fetchdata();
 
   return (
-    <div className="bg-black p-8 sm:p-16 gap-5 flex items-center flex-wrap justify-center ">
+    <div className=" p-8 sm:p-16 gap-5 flex items-center flex-wrap justify-center ">
       {data === "error" ? (
         <ShowError />
       ) : (

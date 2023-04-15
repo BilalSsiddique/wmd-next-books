@@ -9,10 +9,8 @@ const Home = () => {
         <div className="order-2 flex flex-col items-start  p-7 px-4  bg-neutral-300 h-full w-full sm:w-[50%]">
           <p className="text-xl pb-2 font-extrabold">Simple Book Store</p>
           <p className="text-sm text-left">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio
-            ipsum porro cupiditate nisi quibusdam temporibus blanditiis?
-            Suscipit quae veniam explicabo enim perspiciatis in veritatis
-            accusantium, voluptatum recusandae obcaecati eum illo.
+            Welcome to Simple Book store where you can view available books & also also order,update & delete available 
+            books.
           </p>
           <Link
             href="/books"
