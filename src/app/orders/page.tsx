@@ -152,15 +152,6 @@ const AllOrders = () => {
                   <span className=" font-bold">Quantity:</span> {order.quantity}{" "}
                 </p>
               </div>
-              {/* <div className="flex gap-4 flex-col items-center sm:items-start">
-                <p>
-                  <span className=" font-bold">Book Id:</span> {order.bookId}{" "}
-                </p>
-                <p className="text-center">
-                  <span className=" font-bold">Order Id:</span>{" "}
-                  {order.id.slice(0, 8)}......{" "}
-                </p>
-              </div> */}
 
               <div className="flex flex-col gap-4">
                 <Link
@@ -172,7 +163,7 @@ const AllOrders = () => {
                 </Link>
                 <button
                   onClick={() => deleteButtonHandler(order.id)}
-                  className="hover:font-semibold w-auto gap-2 hover:bg-green-700  flex items-end bg-green-500 text-center  text-white py-1 px-2  rounded-md "
+                  className="hover:font-semibold w-auto gap-2 hover:bg-red-700  flex items-end bg-red-500 text-center  text-white py-1 px-2  rounded-md "
                 >
                   <p>Delete Order</p>
                   <BsArrowRightShort fontWeight="extrabold" size={22} />
