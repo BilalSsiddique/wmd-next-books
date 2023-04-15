@@ -14,13 +14,13 @@ const Home = () => {
           </p>
           <Link
             href="/books"
-            className="w-auto gap-2 flex items-end bg-[#1E293B] text-center mt-3 sm:mt-4  text-white py-1 px-2  rounded-md "
+            className="w-auto sm:w-[50%] justify-between gap-2 flex items-end bg-green-500 text-center mt-3 sm:mt-4  text-white py-1 px-2  rounded-md "
           >
             <p>Books</p>
             <BsArrowRightShort fontWeight="extrabold" size={22} />
           </Link>
         </div>
-        <div  className="bg-black bg-cover bg-center bg-[url('/cover2.jpg')] w-full h-[250px] sm:h-full   sm:w-[50%]">
+        <div  className=" bg-cover bg-center bg-[url('/cover2.jpg')] w-full h-[250px] sm:h-full   sm:w-[50%]">
           {/* <img src="" alt="" /> */}
           
         </div>
