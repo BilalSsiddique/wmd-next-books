@@ -131,7 +131,7 @@ const ShowSuccess = ({ response, setSignUpResponse }: any) => {
   // if (response?.accesstoken===undefined) return null
   return (
     <div className="flex  h-screen  justify-center items-center">
-      <div className="text-lg gap-3 flex-col bg-white  flex h-96 w-[300px] rounded-md items-center justify-center">
+      <div className="text-lg gap-3 flex-col bg-white  flex h-96 w-[300px] sm:w-[500] rounded-md items-center justify-center">
         <div className="w-auto text-center py-2 px-3  h-[50%]">
           <p className=" gap-1 font-semibold flex-col flex justify-center items-center ">
             {response?.accessToken !== undefined ? (
