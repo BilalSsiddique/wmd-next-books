@@ -4,8 +4,9 @@ const nextConfig = {
     appDir: true,
   },
   env: {
-    BASE_URL: "https://simple-book-store-bilal-siddique.vercel.app/", //Development
+    BASE_URL: "https://simple-book-store-bilal-siddique.vercel.app/", //production
+  
   },
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -10,6 +10,8 @@ type initialState = {
 };
 
 const initialState: initialState = {
+  // value: '99471e012d04b286a84d3e6d075ddb1e041233e2b9b79768e666c00f5077768d',
+  // loginStatus:200
   value: "",
   loginStatus: 404,
 };
