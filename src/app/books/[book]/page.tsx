@@ -30,15 +30,15 @@ export async function generateStaticParams(): Promise<any[] | any[]> {
   const res: any = await fetchData();
   // console.log("res:", res);
   console.log(res.map((books:any) => ({
-    book:books.id
+    book:books.id.toString()
   })))
   return  res.map((books:any) => ({
-    book:books.id
+    book:books.id.toString()
   }));
   
 }
 
-const SingleBook = async ({ params }: { params: { book: number } }) => {
+const SingleBook = async ({ params }: { params: { book: string } }) => {
   console.log("params,:", params);
   const data: any = await fetchData(params.book);
   //   let data = {
