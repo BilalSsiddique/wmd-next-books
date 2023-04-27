@@ -28,9 +28,13 @@ const fetchData = async (prop?: any): Promise<any[] | "error"> => {
 
 export async function generateStaticParams(): Promise<any[] | any[]> {
   const res: any = await fetchData();
-  console.log("res:", res);
-  
-  return res.map((books:any) => books.id);
+  // console.log("res:", res);
+  console.log(res.map((books:any) => ({
+    book:books.id
+  })))
+  return  res.map((books:any) => ({
+    book:books.id
+  }));
   
 }
 
